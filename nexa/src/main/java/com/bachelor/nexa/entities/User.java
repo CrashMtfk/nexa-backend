@@ -1,5 +1,6 @@
 package com.bachelor.nexa.entities;
 
+import com.bachelor.nexa.config.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;

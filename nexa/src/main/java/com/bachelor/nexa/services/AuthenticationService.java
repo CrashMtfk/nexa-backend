@@ -4,7 +4,6 @@ import com.bachelor.nexa.config.JwtService;
 import com.bachelor.nexa.controllers.AuthenticationRequest;
 import com.bachelor.nexa.controllers.AuthenticationResponse;
 import com.bachelor.nexa.controllers.RegisterRequest;
-import com.bachelor.nexa.entities.Role;
 import com.bachelor.nexa.entities.User;
 import com.bachelor.nexa.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +22,9 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
+        if(checkForExistingUser(request.getUsername(), request.getPlayerName())){
+           return new AuthenticationResponse("This user already exists, try a different username or password");
+        }
         User user = new User();
         user.setPlayerName(request.getPlayerName());
         user.setUsername(request.getUsername());
@@ -45,5 +47,11 @@ public class AuthenticationService {
         var user = repository.findByUsername(request.getUsername());
         var jwtToken = jwtService.generateToken(user);
         return new AuthenticationResponse(jwtToken);
+    }
+
+    public boolean checkForExistingUser(String username, String playerName){
+        User foundUsername = repository.findByUsername(username);
+        User foundPlayerName = repository.findByPlayerName(playerName);
+        return foundUsername != null || foundPlayerName != null;
     }
 }
