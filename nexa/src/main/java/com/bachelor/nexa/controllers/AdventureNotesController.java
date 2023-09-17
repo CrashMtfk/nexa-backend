@@ -15,24 +15,24 @@ public class AdventureNotesController {
         this.adventureNotesService = adventureNotesService;
     }
 
-    @GetMapping("/{userId}/adventure_notes")
+    @GetMapping("/user/adventure_notes/{userId}")
     public ResponseEntity<List<AdventureNotesDTO>> findAllByUserId(@PathVariable Long userId){
         return ResponseEntity.ok(adventureNotesService.findAllByUserId(userId));
     }
 
-    @PostMapping("/{userId}/adventure_note")
+    @PostMapping("/user/adventure_note/{userId}")
     public ResponseEntity<AdventureNotesDTO> saveNewNote(
             @PathVariable Long userId,
             @RequestBody AdventureNotesDTO noteRequest
     ){
         return ResponseEntity.ok(adventureNotesService.saveNewNote(noteRequest,userId));
     }
-    @DeleteMapping("/adventure_note/{noteId}")
+    @DeleteMapping("/user/adventure_note/{noteId}")
     public ResponseEntity<AdventureNotesDTO> deleteNote(@PathVariable Long noteId){
         return ResponseEntity.ok(adventureNotesService.deleteNote(noteId));
     }
 
-    @PatchMapping("/adventure_note")
+    @PatchMapping("/user/adventure_note")
     public ResponseEntity<AdventureNotesDTO> updateNote(@RequestBody AdventureNotesDTO request){
         return ResponseEntity.ok(adventureNotesService.updateNote(request));
     }
