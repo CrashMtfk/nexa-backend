@@ -2,18 +2,15 @@ package com.bachelor.nexa.controllers;
 
 import com.bachelor.nexa.dtos.AdventureNotesDTO;
 import com.bachelor.nexa.services.AdventureNotesServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@RequiredArgsConstructor
 @RestController
 public class AdventureNotesController {
     private final AdventureNotesServiceImpl adventureNotesService;
-
-    public AdventureNotesController(AdventureNotesServiceImpl adventureNotesService) {
-        this.adventureNotesService = adventureNotesService;
-    }
 
     @GetMapping("/user/adventure_notes/{userId}")
     public ResponseEntity<List<AdventureNotesDTO>> findAllByUserId(@PathVariable Long userId){

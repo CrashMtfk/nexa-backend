@@ -1,7 +1,7 @@
 package com.bachelor.nexa.services;
 
 import com.bachelor.nexa.dtos.AdventureNotesDTO;
-import com.bachelor.nexa.entities.AdventureNotes;
+import com.bachelor.nexa.entities.AdventureNote;
 import com.bachelor.nexa.entities.User;
 import com.bachelor.nexa.mappers.AdventureNotesStructMapper;
 import com.bachelor.nexa.repositories.AdventureNotesRepository;
@@ -25,7 +25,7 @@ public class AdventureNotesServiceImpl implements IAdventureNotesService {
 
     @Override
     public List<AdventureNotesDTO> findAllByUserId(Long id) {
-        List<AdventureNotes> adventureNotes = adventureNotesRepository.findAllByUser_Id(id);
+        List<AdventureNote> adventureNotes = adventureNotesRepository.findAllByUser_Id(id);
         return adventureNotes.stream().map(AdventureNotesStructMapper::adventureNoteToAdventureNoteShowDto).collect(Collectors.toList());
     }
 
@@ -34,7 +34,7 @@ public class AdventureNotesServiceImpl implements IAdventureNotesService {
         Optional<User> userOptional = userRepository.findById(userId);
         if(userOptional.isPresent()){
             User user = userOptional.get();
-            AdventureNotes noteToSave = new AdventureNotes();
+            AdventureNote noteToSave = new AdventureNote();
 
             noteToSave.setUser(user);
             noteToSave.setTitle(adventureNotesDTO.getTitle());
@@ -53,9 +53,9 @@ public class AdventureNotesServiceImpl implements IAdventureNotesService {
 
     @Override
     public AdventureNotesDTO deleteNote(Long noteId) {
-        Optional<AdventureNotes> noteOptional = adventureNotesRepository.findById(noteId);
+        Optional<AdventureNote> noteOptional = adventureNotesRepository.findById(noteId);
         if(noteOptional.isPresent()){
-            AdventureNotes noteToDelete = noteOptional.get();
+            AdventureNote noteToDelete = noteOptional.get();
             adventureNotesRepository.delete(noteToDelete);
             return AdventureNotesStructMapper.adventureNoteToAdventureNoteShowDto(noteToDelete);
         }
@@ -64,9 +64,9 @@ public class AdventureNotesServiceImpl implements IAdventureNotesService {
 
     @Override
     public AdventureNotesDTO updateNote(AdventureNotesDTO receivedNote) {
-        Optional<AdventureNotes> notesOptional = adventureNotesRepository.findById(receivedNote.getId());
+        Optional<AdventureNote> notesOptional = adventureNotesRepository.findById(receivedNote.getId());
         if(notesOptional.isPresent()){
-            AdventureNotes noteToUpdate = notesOptional.get();
+            AdventureNote noteToUpdate = notesOptional.get();
 
             noteToUpdate.setTitle(receivedNote.getTitle());
             noteToUpdate.setAccomplishment(receivedNote.getAccomplishment());

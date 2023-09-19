@@ -1,10 +1,10 @@
 package com.bachelor.nexa.mappers;
 
 import com.bachelor.nexa.dtos.AdventureNotesDTO;
-import com.bachelor.nexa.entities.AdventureNotes;
+import com.bachelor.nexa.entities.AdventureNote;
 
 public class AdventureNotesStructMapper {
-    public static AdventureNotesDTO adventureNoteToAdventureNoteShowDto(AdventureNotes adventureNote){
+    public static AdventureNotesDTO adventureNoteToAdventureNoteShowDto(AdventureNote adventureNote){
         if(adventureNote == null){
             return null;
         }

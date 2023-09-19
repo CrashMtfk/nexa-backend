@@ -1,18 +1,18 @@
 package com.bachelor.nexa.entities;
 
-
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "Adventure_Notes", schema = "dbo")
-public class AdventureNotes implements Serializable {
+@Table(name = "Quests", schema = "dbo")
+public class Quest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -20,14 +20,13 @@ public class AdventureNotes implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+    @ManyToOne
+    @JoinColumn(name = "difficulty_id", referencedColumnName = "id")
+    private Difficulty difficulty;
     @Column(name = "title")
     private String title;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
-    @Column(name = "accomplishment")
-    private String accomplishment;
-    @Column(name = "improvement")
-    private String improvement;
-    @Column(name = "thought")
-    private String thought;
+    @Column(name = "status")
+    private boolean status;
 }
