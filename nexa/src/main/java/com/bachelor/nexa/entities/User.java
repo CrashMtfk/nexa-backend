@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "Users", schema = "dbo")
-public class User implements UserDetails {
+public class User implements UserDetails,Comparable<User> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -31,6 +31,8 @@ public class User implements UserDetails {
     private int coins;
     @Column(name = "experience")
     private int experience;
+    @Column(name = "required_experience")
+    private int requiredExperience;
 
 
     @Enumerated(EnumType.STRING)
@@ -70,5 +72,17 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+
+    @Override
+    public int compareTo(User o) {
+        if(level == o.getLevel()){
+            return 0;
+        } else if(level >  o.getLevel()){
+            return 1;
+        } else {
+            return -1;
+        }
     }
 }
