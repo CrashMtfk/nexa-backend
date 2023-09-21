@@ -11,6 +11,7 @@ import com.bachelor.nexa.repositories.StageRepository;
 import com.bachelor.nexa.repositories.UserRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class JourneyServiceImpl implements IJourneyService{
         return journeys.stream().map(JourneyStructMapper::journeyToJourneyDTO).collect(Collectors.toList());
     }
 
+    @SneakyThrows
     @Override
     public JourneyDTO createJourney(JourneyDTO request, Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
@@ -54,10 +56,12 @@ public class JourneyServiceImpl implements IJourneyService{
             }
             journey.setStageSet(stages);
             return JourneyStructMapper.journeyToJourneyDTO(journey);
+        } else {
+            throw new Exception("Journey not found!");
         }
-        return null;
     }
 
+    @SneakyThrows
     @Override
     public JourneyDTO updateJourney(JourneyDTO request) {
         Optional<Journey> journeyOptional = journeyRepository.findById(request.getId());
@@ -75,10 +79,12 @@ public class JourneyServiceImpl implements IJourneyService{
                 }
             }
             return JourneyStructMapper.journeyToJourneyDTO(journeyToUpdate);
+        } else {
+            throw new Exception("Journey not found!");
         }
-        return null;
     }
 
+    @SneakyThrows
     @Override
     public JourneyDTO deleteJourney(Long journeyId){
         Optional<Journey> journeyOptional = journeyRepository.findById(journeyId);
@@ -88,8 +94,9 @@ public class JourneyServiceImpl implements IJourneyService{
             stageRepository.deleteAll(journeyStages);
             journeyRepository.delete(journeyToDelete);
             return JourneyStructMapper.journeyToJourneyDTO(journeyToDelete);
+        } else {
+            throw new Exception("Journey not found!");
         }
-        return null;
     }
 
 

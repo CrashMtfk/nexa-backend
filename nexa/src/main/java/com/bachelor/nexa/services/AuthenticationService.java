@@ -1,9 +1,9 @@
 package com.bachelor.nexa.services;
 
 import com.bachelor.nexa.config.JwtService;
-import com.bachelor.nexa.controllers.AuthenticationRequest;
-import com.bachelor.nexa.controllers.AuthenticationResponse;
-import com.bachelor.nexa.controllers.RegisterRequest;
+import com.bachelor.nexa.dtos.AuthenticationRequest;
+import com.bachelor.nexa.dtos.AuthenticationResponse;
+import com.bachelor.nexa.dtos.RegisterRequest;
 import com.bachelor.nexa.entities.User;
 import com.bachelor.nexa.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +23,7 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest request) {
         if(checkForExistingUser(request.getUsername(), request.getPlayerName())){
-           return new AuthenticationResponse("This user already exists, try a different username or password");
+           return new AuthenticationResponse("This user already exists, try a different username or player name");
         }
         User user = new User();
         user.setPlayerName(request.getPlayerName());

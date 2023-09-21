@@ -5,6 +5,7 @@ import com.bachelor.nexa.entities.User;
 import com.bachelor.nexa.mappers.UserStructMapper;
 import com.bachelor.nexa.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -24,6 +25,7 @@ public class UserServiceImpl implements IUserService{
         return users.stream().map(UserStructMapper::userToUserDto).collect(Collectors.toList());
     }
 
+    @SneakyThrows
     @Override
     public UserDTO levelUp(Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
@@ -36,10 +38,12 @@ public class UserServiceImpl implements IUserService{
             userRepository.save(user);
 
             return UserStructMapper.userToUserDto(user);
+        } else {
+            throw new Exception("User not found!");
         }
-        return null;
     }
 
+    @SneakyThrows
     @Override
     public UserDTO changeExperience(Long userId, int experience) {
         Optional<User> userOptional = userRepository.findById(userId);
@@ -50,8 +54,9 @@ public class UserServiceImpl implements IUserService{
             userRepository.save(user);
 
             return UserStructMapper.userToUserDto(user);
+        } else {
+            throw new Exception("User not found!");
         }
-        return null;
     }
 
 }

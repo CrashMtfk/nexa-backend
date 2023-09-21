@@ -1,4 +1,4 @@
-package com.bachelor.nexa.controllers;
+package com.bachelor.nexa.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

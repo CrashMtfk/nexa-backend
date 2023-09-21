@@ -9,6 +9,7 @@ import com.bachelor.nexa.repositories.DifficultyRepository;
 import com.bachelor.nexa.repositories.QuestRepository;
 import com.bachelor.nexa.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -28,6 +29,7 @@ public class QuestServiceImpl implements IQuestService{
         return quests.stream().map(QuestStructMapper::questToQuestDto).collect(Collectors.toList());
     }
 
+    @SneakyThrows
     @Override
     public QuestDTO createNewQuest(QuestDTO request, Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
@@ -45,10 +47,12 @@ public class QuestServiceImpl implements IQuestService{
 
             questRepository.save(questToSave);
             return QuestStructMapper.questToQuestDto(questToSave);
+        } else {
+            throw new Exception("User or Difficulty not found!");
         }
-        return null;
     }
 
+    @SneakyThrows
     @Override
     public QuestDTO deleteByQuestId(Long questId) {
         Optional<Quest> questOptional = questRepository.findById(questId);
@@ -56,7 +60,8 @@ public class QuestServiceImpl implements IQuestService{
             Quest questToDelete = questOptional.get();
             questRepository.delete(questToDelete);
             return QuestStructMapper.questToQuestDto(questToDelete);
+        } else {
+            throw new Exception("Quest not found!");
         }
-        return null;
     }
 }

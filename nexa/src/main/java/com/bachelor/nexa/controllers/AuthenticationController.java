@@ -1,5 +1,8 @@
 package com.bachelor.nexa.controllers;
 
+import com.bachelor.nexa.dtos.AuthenticationRequest;
+import com.bachelor.nexa.dtos.AuthenticationResponse;
+import com.bachelor.nexa.dtos.RegisterRequest;
 import com.bachelor.nexa.services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

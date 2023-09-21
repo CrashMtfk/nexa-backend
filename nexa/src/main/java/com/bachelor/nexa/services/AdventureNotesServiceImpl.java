@@ -6,6 +6,8 @@ import com.bachelor.nexa.entities.User;
 import com.bachelor.nexa.mappers.AdventureNotesStructMapper;
 import com.bachelor.nexa.repositories.AdventureNotesRepository;
 import com.bachelor.nexa.repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -13,15 +15,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@RequiredArgsConstructor
 @Service
 public class AdventureNotesServiceImpl implements IAdventureNotesService {
     private final AdventureNotesRepository adventureNotesRepository;
     private final UserRepository userRepository;
-
-    public AdventureNotesServiceImpl(AdventureNotesRepository adventureNotesRepository, UserRepository userRepository) {
-        this.adventureNotesRepository = adventureNotesRepository;
-        this.userRepository = userRepository;
-    }
 
     @Override
     public List<AdventureNotesDTO> findAllByUserId(Long id) {
@@ -29,6 +27,7 @@ public class AdventureNotesServiceImpl implements IAdventureNotesService {
         return adventureNotes.stream().map(AdventureNotesStructMapper::adventureNoteToAdventureNoteShowDto).collect(Collectors.toList());
     }
 
+    @SneakyThrows
     @Override
     public AdventureNotesDTO saveNewNote(AdventureNotesDTO adventureNotesDTO, Long userId) {
         Optional<User> userOptional = userRepository.findById(userId);
@@ -46,11 +45,12 @@ public class AdventureNotesServiceImpl implements IAdventureNotesService {
             adventureNotesRepository.save(noteToSave);
 
             return AdventureNotesStructMapper.adventureNoteToAdventureNoteShowDto(noteToSave);
+        } else {
+            throw new Exception("Adventure note not found!");
         }
-
-        return null;
     }
 
+    @SneakyThrows
     @Override
     public AdventureNotesDTO deleteNote(Long noteId) {
         Optional<AdventureNote> noteOptional = adventureNotesRepository.findById(noteId);
@@ -58,10 +58,12 @@ public class AdventureNotesServiceImpl implements IAdventureNotesService {
             AdventureNote noteToDelete = noteOptional.get();
             adventureNotesRepository.delete(noteToDelete);
             return AdventureNotesStructMapper.adventureNoteToAdventureNoteShowDto(noteToDelete);
+        } else {
+            throw new Exception("Adventure note not found!");
         }
-        return null;
     }
 
+    @SneakyThrows
     @Override
     public AdventureNotesDTO updateNote(AdventureNotesDTO receivedNote) {
         Optional<AdventureNote> notesOptional = adventureNotesRepository.findById(receivedNote.getId());
@@ -76,8 +78,8 @@ public class AdventureNotesServiceImpl implements IAdventureNotesService {
             adventureNotesRepository.save(noteToUpdate);
 
             return AdventureNotesStructMapper.adventureNoteToAdventureNoteShowDto(noteToUpdate);
+        } else {
+            throw new Exception("Adventure note not found!");
         }
-
-        return null;
     }
 }
