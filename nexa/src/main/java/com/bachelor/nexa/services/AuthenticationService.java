@@ -23,7 +23,7 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest request) {
         if(checkForExistingUser(request.getUsername(), request.getPlayerName())){
-           return new AuthenticationResponse("This user already exists, try a different username or player name");
+           return null;
         }
         User user = new User();
         user.setPlayerName(request.getPlayerName());
@@ -34,7 +34,7 @@ public class AuthenticationService {
         user.setExperience(0);
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
-        return new AuthenticationResponse(jwtToken);
+        return new AuthenticationResponse(jwtToken, user.getId());
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
@@ -46,7 +46,7 @@ public class AuthenticationService {
         );
         var user = repository.findByUsername(request.getUsername());
         var jwtToken = jwtService.generateToken(user);
-        return new AuthenticationResponse(jwtToken);
+        return new AuthenticationResponse(jwtToken, user.getId());
     }
 
     public boolean checkForExistingUser(String username, String playerName){
