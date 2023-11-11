@@ -10,4 +10,5 @@ public interface IUserService {
     UserDTO levelUp(Long userId);
     UserDTO changeExperience(Long userId, int experience);
 
+    UserDTO findUserById(Long userId);
 }

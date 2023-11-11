@@ -58,4 +58,16 @@ public class UserServiceImpl implements IUserService{
         }
     }
 
+    @SneakyThrows
+    @Override
+    public UserDTO findUserById(Long userId) {
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (userOptional.isPresent()){
+            User user = userOptional.get();
+            return UserStructMapper.userToUserDto(user);
+        } else {
+            throw new Exception("User not found!");
+        }
+    }
+
 }

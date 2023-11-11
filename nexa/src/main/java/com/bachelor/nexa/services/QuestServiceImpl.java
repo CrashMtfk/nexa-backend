@@ -64,4 +64,18 @@ public class QuestServiceImpl implements IQuestService{
             throw new Exception("Quest not found!");
         }
     }
+
+    @SneakyThrows
+    @Override
+    public QuestDTO modifyQuestStatus(Long questId) {
+        Optional<Quest> questOptional = questRepository.findById(questId);
+        if(questOptional.isPresent()){
+            Quest questToModify = questOptional.get();
+            questToModify.setStatus(!questToModify.isStatus());
+            questRepository.save(questToModify);
+            return QuestStructMapper.questToQuestDto(questToModify);
+        } else {
+            throw new Exception("Quest not found!");
+        }
+    }
 }

@@ -30,4 +30,10 @@ public class QuestController {
     public ResponseEntity<QuestDTO> deleteQuest(@PathVariable Long questId){
         return ResponseEntity.ok(questService.deleteByQuestId(questId));
     }
+
+    @PatchMapping("user/quest/{questId}")
+    public ResponseEntity<QuestDTO> modifyStatus(@PathVariable Long questId){
+        return ResponseEntity.ok(questService.modifyQuestStatus(questId));
+    }
+
 }

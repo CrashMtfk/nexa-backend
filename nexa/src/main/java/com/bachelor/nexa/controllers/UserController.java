@@ -12,6 +12,10 @@ import java.util.List;
 @RestController
 public class UserController {
     private final UserServiceImpl userService;
+    @GetMapping("/user/current/{userId}")
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long userId){
+        return ResponseEntity.ok(userService.findUserById(userId));
+    }
     @GetMapping("/users/leaderboard")
     public ResponseEntity<List<UserDTO>> getUsers(){
         return ResponseEntity.ok(userService.getLeaderboard());

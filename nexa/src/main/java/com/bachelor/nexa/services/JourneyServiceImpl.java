@@ -75,6 +75,7 @@ public class JourneyServiceImpl implements IJourneyService{
                     Stage stageToUpdate = stageOptional.get();
                     stageToUpdate.setTitle(stage.getTitle());
                     stageToUpdate.setDescription(stage.getDescription());
+                    stageToUpdate.setStatus(stage.isStatus());
                     stageRepository.save(stageToUpdate);
                 }
             }

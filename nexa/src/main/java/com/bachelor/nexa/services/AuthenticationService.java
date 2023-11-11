@@ -32,6 +32,7 @@ public class AuthenticationService {
         user.setCoins(0);
         user.setLevel(1);
         user.setExperience(0);
+        user.setRequiredExperience(100);
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
         return new AuthenticationResponse(jwtToken, user.getId());
