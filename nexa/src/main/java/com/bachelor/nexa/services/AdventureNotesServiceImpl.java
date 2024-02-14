@@ -23,8 +23,9 @@ public class AdventureNotesServiceImpl implements IAdventureNotesService {
 
     @Override
     public List<AdventureNotesDTO> findAllByUserId(Long id) {
-        List<AdventureNote> adventureNotes = adventureNotesRepository.findAllByUser_Id(id);
-        return adventureNotes.stream().map(AdventureNotesStructMapper::adventureNoteToAdventureNoteShowDto).collect(Collectors.toList());
+        return adventureNotesRepository.findAllByUser_Id(id)
+                .stream().map(AdventureNotesStructMapper::adventureNoteToAdventureNoteShowDto)
+                .collect(Collectors.toList());
     }
 
     @SneakyThrows

@@ -9,18 +9,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Stages", schema = "dbo")
-public class Stage {
+@Table(name = "Answer", schema = "dbo")
+public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "objective_id", referencedColumnName = "id")
-    private Journey journey;
-    @ManyToOne
-    @JoinColumn(name = "game_id", referencedColumnName = "id")
-    private Game game;
-    @Column(name = "status")
-    private boolean status;
+    @JoinColumn(name = "question_id", referencedColumnName = "id")
+    private Question question;
+    @Column(name = "answer_text")
+    private String answerText;
+    @Column(name = "isCorrect")
+    private boolean isCorrect;
 }

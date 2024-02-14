@@ -20,8 +20,9 @@ public class UserServiceImpl implements IUserService{
     private final UserRepository userRepository;
     @Override
     public List<UserDTO> getLeaderboard() {
-        List<User> users = userRepository.findTop10ByOrderByLevelDesc();
-        return users.stream().map(UserStructMapper::userToUserDto).collect(Collectors.toList());
+        return userRepository.findTop10ByOrderByLevelDesc()
+                .stream().map(UserStructMapper::userToUserDto)
+                .collect(Collectors.toList());
     }
 
     @SneakyThrows

@@ -10,6 +10,7 @@ import com.bachelor.nexa.repositories.QuestRepository;
 import com.bachelor.nexa.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.hibernate.annotations.NotFound;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -24,9 +25,10 @@ public class QuestServiceImpl implements IQuestService{
     private final UserRepository userRepository;
     private final DifficultyRepository difficultyRepository;
     @Override
-    public List<QuestDTO> findAllByUserId(Long userId) {
-        List<Quest> quests =  questRepository.findAllByUserId(userId);
-        return quests.stream().map(QuestStructMapper::questToQuestDto).collect(Collectors.toList());
+    public List<QuestDTO> findAllQuestsByUserId(Long userId) {
+        return questRepository.findAllByUserId(userId)
+                .stream().map(QuestStructMapper::questToQuestDto)
+                .collect(Collectors.toList());
     }
 
     @SneakyThrows

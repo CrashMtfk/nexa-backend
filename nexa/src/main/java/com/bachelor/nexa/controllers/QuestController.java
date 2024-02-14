@@ -15,7 +15,7 @@ public class QuestController {
 
     @GetMapping("/user/quests/{userId}")
     public ResponseEntity<List<QuestDTO>> findAllQuestsByUserId(@PathVariable Long userId){
-        return ResponseEntity.ok(questService.findAllByUserId(userId));
+        return ResponseEntity.ok(questService.findAllQuestsByUserId(userId));
     }
 
     @PostMapping("/user/quest/{userId}")

@@ -48,8 +48,6 @@ public class JourneyServiceImpl implements IJourneyService{
             for (StageDTO stage : request.getStageDTOSet()) {
                 Stage journeyStage = new Stage();
                 journeyStage.setJourney(journey);
-                journeyStage.setTitle(stage.getTitle());
-                journeyStage.setDescription(stage.getDescription());
                 journeyStage.setStatus(false);
                 stages.add(journeyStage);
                 stageRepository.save(journeyStage);
@@ -73,8 +71,6 @@ public class JourneyServiceImpl implements IJourneyService{
                 Optional<Stage> stageOptional = stageRepository.findById(stage.getId());
                 if (stageOptional.isPresent()){
                     Stage stageToUpdate = stageOptional.get();
-                    stageToUpdate.setTitle(stage.getTitle());
-                    stageToUpdate.setDescription(stage.getDescription());
                     stageToUpdate.setStatus(stage.isStatus());
                     stageRepository.save(stageToUpdate);
                 }
