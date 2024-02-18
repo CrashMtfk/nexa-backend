@@ -2,10 +2,12 @@ package com.bachelor.nexa.services;
 
 import com.bachelor.nexa.dtos.JourneyDTO;
 import com.bachelor.nexa.dtos.StageDTO;
+import com.bachelor.nexa.entities.Game;
 import com.bachelor.nexa.entities.Journey;
 import com.bachelor.nexa.entities.Stage;
 import com.bachelor.nexa.entities.User;
 import com.bachelor.nexa.mappers.JourneyStructMapper;
+import com.bachelor.nexa.repositories.GameRepository;
 import com.bachelor.nexa.repositories.JourneyRepository;
 import com.bachelor.nexa.repositories.StageRepository;
 import com.bachelor.nexa.repositories.UserRepository;
@@ -26,6 +28,7 @@ public class JourneyServiceImpl implements IJourneyService{
     private final JourneyRepository journeyRepository;
     private final StageRepository stageRepository;
     private final UserRepository userRepository;
+    private final GameRepository gameRepository;
     @Override
     public List<JourneyDTO> findAllByUserId(Long userId) {
         List<Journey> journeys = journeyRepository.findAllByUserId(userId);
@@ -49,6 +52,10 @@ public class JourneyServiceImpl implements IJourneyService{
                 Stage journeyStage = new Stage();
                 journeyStage.setJourney(journey);
                 journeyStage.setStatus(false);
+                Optional<Game> gameOptional = gameRepository.findById(stage.getGame().getId());
+                if (gameOptional.isPresent()){
+                    journeyStage.setGame(gameOptional.get());
+                }
                 stages.add(journeyStage);
                 stageRepository.save(journeyStage);
             }
@@ -72,6 +79,10 @@ public class JourneyServiceImpl implements IJourneyService{
                 if (stageOptional.isPresent()){
                     Stage stageToUpdate = stageOptional.get();
                     stageToUpdate.setStatus(stage.isStatus());
+                    Optional<Game> gameOptional = gameRepository.findById(stage.getGame().getId());
+                    if (gameOptional.isPresent()){
+                     stageToUpdate.setGame(gameOptional.get());
+                    }
                     stageRepository.save(stageToUpdate);
                 }
             }

@@ -1,6 +1,7 @@
 package com.bachelor.nexa.controllers;
 
-import com.bachelor.nexa.dtos.GameDTO;
+import com.bachelor.nexa.dtos.GameDTOGetAll;
+import com.bachelor.nexa.dtos.GameDTOGetSimple;
 import com.bachelor.nexa.services.GameServiceImpl;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +21,11 @@ public class GameController {
     private final GameServiceImpl gameService;
 
     @GetMapping("/games")
-    public ResponseEntity<List<GameDTO>> findAllGames(){
+    public ResponseEntity<List<GameDTOGetAll>> findAllGames(){
         return ResponseEntity.ok(gameService.findAllGames());
     }
     @GetMapping("/games/{gameId}")
-    public ResponseEntity<GameDTO> findByGameId(@PathVariable Long gameId){
+    public ResponseEntity<GameDTOGetSimple> findByGameId(@PathVariable Long gameId){
         return ResponseEntity.ok(gameService.findGameById(gameId));
     }
 

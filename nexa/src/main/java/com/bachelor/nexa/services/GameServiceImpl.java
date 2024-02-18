@@ -1,6 +1,7 @@
 package com.bachelor.nexa.services;
 
-import com.bachelor.nexa.dtos.GameDTO;
+import com.bachelor.nexa.dtos.GameDTOGetAll;
+import com.bachelor.nexa.dtos.GameDTOGetSimple;
 import com.bachelor.nexa.entities.Game;
 import com.bachelor.nexa.mappers.GameStructMapper;
 import com.bachelor.nexa.repositories.GameRepository;
@@ -18,17 +19,17 @@ import java.util.stream.Collectors;
 public class GameServiceImpl implements IGameService{
     private final GameRepository gameRepository;
     @Override
-    public GameDTO findGameById(Long id) {
+    public GameDTOGetSimple findGameById(Long id) {
         Optional<Game> foundGame = gameRepository.findById(id);
         if (foundGame.isPresent()){
             Game game = foundGame.get();
-            return GameStructMapper.gameToGameDTO(game);
+            return GameStructMapper.gameToGameDTOGetSimple(game);
         }
         return null;
     }
 
     @Override
-    public List<GameDTO> findAllGames() {
-        return gameRepository.findAll().stream().map(GameStructMapper::gameToGameDTO).collect(Collectors.toList());
+    public List<GameDTOGetAll> findAllGames() {
+        return gameRepository.findAll().stream().map(GameStructMapper::gameToGameDTOGetAll).collect(Collectors.toList());
     }
 }

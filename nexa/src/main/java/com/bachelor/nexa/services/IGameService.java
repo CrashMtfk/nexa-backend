@@ -1,10 +1,11 @@
 package com.bachelor.nexa.services;
 
-import com.bachelor.nexa.dtos.GameDTO;
+import com.bachelor.nexa.dtos.GameDTOGetAll;
+import com.bachelor.nexa.dtos.GameDTOGetSimple;
 
 import java.util.List;
 
 public interface IGameService {
-    GameDTO findGameById(Long id);
-    List<GameDTO> findAllGames();
+    GameDTOGetSimple findGameById(Long id);
+    List<GameDTOGetAll> findAllGames();
 }
